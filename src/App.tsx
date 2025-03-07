@@ -107,7 +107,7 @@ function App() {
         </article>
 
         {/* Info Cards Section */}
-        <article className="grid md:grid-cols-4 gap-5 sm:gap-4 p-8 bg-white rounded-lg shadow-md absolute top-1/4 sm:mt-6 z-50 w-10/12 sm:w-10/12 md:divide-x divide-solid divide-dark-gray">
+        <article className="grid md:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-4 p-8 bg-white rounded-lg shadow-md absolute top-1/4 sm:mt-6 z-50 w-10/12 sm:w-10/12 lg:divide-x divide-solid divide-dark-gray">
           {dataFields.map(({ label, key }, index) => {
             let value = "Loading...";
 
