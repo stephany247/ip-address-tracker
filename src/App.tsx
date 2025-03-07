@@ -85,7 +85,7 @@ function App() {
         <h1 className="text-center font-medium text-3xl text-white">
           IP Address Tracker
         </h1>
-        <div className="space-y-1 w-11/12 flex justify-center">
+        <article className="space-y-1 w-11/12 flex justify-center">
           <form className="bg-white flex items-center justify-between rounded-xl w-full max-w-lg">
             <input
               type="search"
@@ -104,10 +104,10 @@ function App() {
             </button>
           </form>
           {error && <p className="text-red-400 text-sm">{error}</p>}
-        </div>
+        </article>
 
         {/* Info Cards Section */}
-        <div className="grid md:grid-cols-4 gap-5 sm:gap-4 p-8 bg-white rounded-lg shadow-md absolute top-1/4 sm:mt-6 z-50 w-10/12 sm:w-10/12 md:divide-x divide-solid divide-dark-gray">
+        <article className="grid md:grid-cols-4 gap-5 sm:gap-4 p-8 bg-white rounded-lg shadow-md absolute top-1/4 sm:mt-6 z-50 w-10/12 sm:w-10/12 md:divide-x divide-solid divide-dark-gray">
           {dataFields.map(({ label, key }, index) => {
             let value = "Loading...";
 
@@ -133,17 +133,17 @@ function App() {
               </div>
             );
           })}
-        </div>
+        </article>
       </div>
       {/* Map Section */}
-      <div className="h-[60vh] w-full z-0">
+      <section className="h-[60vh] w-full z-0">
         <Map
           lat={coords.lat}
           lng={coords.lng}
           city={ipData?.location.city || "Unknown"}
           country={ipData?.location.country || "Unknown"}
         />
-      </div>
+      </section>
     </main>
   );
 }

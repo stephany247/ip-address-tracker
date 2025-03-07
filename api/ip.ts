@@ -1,11 +1,13 @@
-import { VercelRequest, VercelResponse } from "@vercel/node";
+import type { VercelRequest, VercelResponse } from "@vercel/node";
 import axios from "axios";
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req: VercelRequest, res: VercelResponse): Promise<void> {
+  "use strict";
   const { ip } = req.query; // Get IP address from request query
 
   if (!ip) {
-    return res.status(400).json({ error: "IP address is required" });
+    res.status(400).json({ error: "IP address is required" });
+    return;
   }
 
   const API_KEY = process.env.IPIFY_API_KEY; // Secure API Key (Not exposed)
