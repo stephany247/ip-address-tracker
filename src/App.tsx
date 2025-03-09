@@ -29,26 +29,36 @@ function App() {
   const [coords, setCoords] = useState({ lat: 0, lng: 0 });
   const [error, setError] = useState("");
 
-  const isValidIP = (ip: string) => {
+  const isValidIP = (input: string) => {
     const ipv4Regex =
       /^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])){3}$/;
     const ipv6Regex =
       /^(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9])?[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9])?[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9])?[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9])?[0-9]))$/;
 
-    return ipv4Regex.test(ip) || ipv6Regex.test(ip);
+    return ipv4Regex.test(input) || ipv6Regex.test(input);
+  };
+
+  const isValidDomain = (input: string) => {
+    const domainRegex =
+      /^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$/;
+    return domainRegex.test(input);
   };
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!isValidIP(ip)) {
-      setError("Please enter a valid IP address.");
+    // Check if the input is a valid IP address or domain
+    const isIP = isValidIP(ip);
+    const isDomain = isValidDomain(ip);
+
+    if (!isIP && !isDomain) {
+      setError("Please enter a valid IP address or domain. Eg google.com");
       return;
     }
 
     setError("");
     console.log("Fetching data for IP:", ip);
-    const data = await getIPData(ip);
+    const data = await getIPData(ip, isIP);
 
     if (data) {
       console.log("Fetched Data:", data);
@@ -65,7 +75,7 @@ function App() {
         const res = await fetch("https://api64.ipify.org?format=json");
         const data = await res.json();
         setIp(data.ip);
-        const ipData = await getIPData(data.ip);
+        const ipData = await getIPData(data.ip,true );
         if (ipData) {
           setIpData(ipData);
           setCoords({ lat: ipData.location.lat, lng: ipData.location.lng });
@@ -85,19 +95,22 @@ function App() {
         <h1 className="text-center font-medium text-3xl text-white">
           IP Address Tracker
         </h1>
-        <article className="space-y-1 w-11/12 flex justify-center">
+        <article className="space-y-1 w-11/12 flex flex-col items-center justify-center">
           <form className="bg-white flex items-center justify-between rounded-xl w-full max-w-lg">
             <input
               type="search"
               placeholder="Search for any IP address or domain"
               value={ip}
-              onChange={(e) => setIp(e.target.value)}
+              onChange={(e) => {
+                setIp(e.target.value);
+                setError("");
+              }}
               className="w-full pl-4 pr-2 outline-none"
             />
 
             <button
               type="submit"
-              className="bg-very-dark-gray hover:bg-very-dark-gray/85 w-fit p-5 rounded-r-xl transition duration-300 ease-in-out"
+              className="bg-very-dark-gray hover:bg-very-dark-gray/85 w-fit p-5 rounded-r-xl transition duration-300 ease-in-out cursor-pointer"
               onClick={handleSearch}
             >
               <img src={iconArrow} alt="search"></img>
