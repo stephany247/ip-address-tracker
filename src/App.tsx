@@ -52,7 +52,7 @@ function App() {
     const isDomain = isValidDomain(ip);
 
     if (!isIP && !isDomain) {
-      setError("Please enter a valid IP address or domain. Eg google.com");
+      setError("Please enter a valid IP address or domain. For example, 8.8.8.8 or google.com");
       return;
     }
 
