@@ -1,54 +1,73 @@
-# React + TypeScript + Vite
+# IP Address Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
+The **IP Address Tracker** is a web application that allows users to search for IP addresses or domain names to retrieve geographic and network-related data. The application provides information such as the IP address, location, timezone, and ISP, along with a map displaying the location.
 
-Currently, two official plugins are available:
+## Features
+- Search for an **IP address** or **domain name**
+- Automatically resolves domain names to their corresponding IP addresses
+- Displays key information including:
+  - IP Address
+  - Location (City, Region, Country)
+  - Timezone
+  - ISP (Internet Service Provider)
+- Interactive map visualization of the IP location
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Technologies Used
+- **Vite** – Build tool for faster development
+- **React** – Frontend framework for building the UI
+- **TypeScript** – Ensuring type safety and improved development experience
+- **Tailwind CSS** – Styling the application efficiently
+- **React Leaflet** – Displaying the IP location on a map
+- **IP Geolocation API** – Fetching IP address details
 
-## Expanding the ESLint configuration
+## Installation & Setup
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/your-username/ip-address-tracker.git
+   cd ip-address-tracker
+   ```
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+2. Install dependencies:
+   ```sh
+   npm install
+   ```
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+3. Create a `.env` file in the root directory and add your API key:
+   ```env
+   VITE_IP_API_KEY=your_api_key_here
+   ```
+
+4. Start the development server:
+   ```sh
+   npm run dev
+   ```
+
+## Usage
+- Enter an **IP address** (e.g., `8.8.8.8`) or a **domain name** (e.g., `google.com`) in the search bar.
+- Click the **Search** button to fetch and display the IP details.
+- If a domain name is entered, it is first resolved to an IP address before fetching data.
+- The results, along with a map, are displayed on the page.
+
+
+## API Reference
+This project uses an **IP Geolocation API**. To use it, obtain an API key from a provider such as:
+- [ipify](https://www.ipify.org/)
+- [IP Geolocation API](https://ipgeolocation.io/)
+
+Example API request:
+```sh
+GET https://api.ipgeolocation.io/ipgeo?apiKey=YOUR_API_KEY&ip=8.8.8.8
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Future Enhancements
+- Improve error handling and user feedback
+- Add dark mode
+- Allow users to track their own public IP automatically
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## License
+This project is licensed under the [MIT License](LICENSE).
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+## Acknowledgments
+- Frontend Mentor for the challenge inspiration
+- Open-source libraries used in this project
